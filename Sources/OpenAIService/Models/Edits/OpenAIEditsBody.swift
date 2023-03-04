@@ -8,7 +8,7 @@
 import Foundation
 
 /// https://platform.openai.com/docs/api-reference/edits/create
-struct OpenAIEditsBody: Encodable {
+public struct OpenAIEditsBody: Encodable {
     
     let model: OpenAIEditsModelType
     
@@ -31,7 +31,7 @@ struct OpenAIEditsBody: Encodable {
     /// So 0.1 means only the tokens comprising the top 10% probability mass are considered.
     let nucleusSampling: Double?
     
-    init(
+    public init(
         model: OpenAIEditsModelType = .davinci,
         input: String? = "",
         instruction: String,

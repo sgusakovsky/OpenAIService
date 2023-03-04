@@ -8,7 +8,7 @@
 import Foundation
 
 /// https://platform.openai.com/docs/api-reference/completions
-struct OpenAICompletionBody: Encodable {
+public struct OpenAICompletionBody: Encodable {
     
     let model: OpenAICompletionModelType
     
@@ -63,7 +63,7 @@ struct OpenAICompletionBody: Encodable {
     /// A unique identifier representing your end-user, which can help OpenAI to monitor and detect abuse
     let user: String?
     
-    init(
+    public init(
         model: OpenAICompletionModelType = .davinci,
         prompt: String,
         suffix: String? = nil,

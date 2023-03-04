@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct OpenAICompletionResponse: Codable {
+public struct OpenAICompletionResponse: Codable {
     let id: String
     let object: String
     let model: String
@@ -15,7 +15,7 @@ struct OpenAICompletionResponse: Codable {
     let choices: [OpenAICompletionChoice]
 }
 
-struct OpenAICompletionChoice: Codable {
+public struct OpenAICompletionChoice: Codable {
     let text: String
     let index: Int
     let finishReason: String

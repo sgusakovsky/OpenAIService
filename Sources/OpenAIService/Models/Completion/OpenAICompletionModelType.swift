@@ -8,7 +8,7 @@
 import Foundation
 
 /// A set of models that can understand and generate natural language
-enum OpenAICompletionModelType: String, Encodable {
+public enum OpenAICompletionModelType: String, Encodable {
     
     /// Most capable GPT-3 model. Can do any task the other models can do, often with higher quality, longer output and better instruction-following. Also supports inserting completions within text.
     ///

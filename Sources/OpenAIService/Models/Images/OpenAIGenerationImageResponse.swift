@@ -8,10 +8,10 @@
 
 import Foundation
 
-struct OpenAIGenerationImageResponse: Codable {
+public struct OpenAIGenerationImageResponse: Codable {
    let data: [OpenAIGenerationImageData]
 }
 
-struct OpenAIGenerationImageData: Codable {
+public struct OpenAIGenerationImageData: Codable {
    let url: String
 }

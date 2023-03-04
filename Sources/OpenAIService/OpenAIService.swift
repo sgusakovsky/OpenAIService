@@ -11,12 +11,12 @@ import FoundationNetworking
 import FoundationXML
 #endif
 
-final class OpenAIService {
+public final class OpenAIService {
     private let token: String
     private let apiClient: OpenAIApiClient
     
     
-    init(authToken: String, apiClient: OpenAIApiClient = OpenAIApiClient()) {
+    public init(authToken: String, apiClient: OpenAIApiClient = OpenAIApiClient()) {
         self.token = authToken
         self.apiClient = apiClient
     }
@@ -25,7 +25,7 @@ final class OpenAIService {
     /// - Parameters:
     ///   - body: Body of comletion request
     ///   - completionHandler: Returns an OpenAICompletionResponse Data Model
-    func sendCompletion(
+    public func sendCompletion(
         with body: OpenAICompletionBody,
         networkQueue: DispatchQueue = .global(qos: .background),
         responseQueue: DispatchQueue = .main,
@@ -49,7 +49,7 @@ final class OpenAIService {
     /// - Parameters:
     ///   - body: Body of chat completion request
     ///   - completionHandler: Returns an OpenAIChatResponse Data Model
-    func sendChat(
+    public func sendChat(
         with body: OpenAIChatBody,
         networkQueue: DispatchQueue = .global(qos: .background),
         responseQueue: DispatchQueue = .main,
@@ -75,7 +75,7 @@ final class OpenAIService {
     ///   - model: The AI Model to Use. Set to `OpenAIEditsModelType.feature(.davinci)` by default which is the most capable model
     ///   - instruction: The instruction that tells the model how to edit the prompt.
     ///   - completionHandler: Returns an OpenAIEditsResponse Data Model
-    func sendEdits(
+    public func sendEdits(
         with body: OpenAIEditsBody,
         networkQueue: DispatchQueue = .global(qos: .background),
         responseQueue: DispatchQueue = .main,
@@ -100,7 +100,7 @@ final class OpenAIService {
     ///   - imageSize: Size of expected image to Use. Set to `OpenAIGenerationImageSize.large` by default.
     ///   - user: A unique identifier representing your end-user, which can help OpenAI to monitor and detect abuse.
     ///   - completionHandler: Returns an OpenAIGenerationImageResponse Data Model
-    func sendImageGeneration(
+    public func sendImageGeneration(
         with body: OpenAIGenerationImageBody,
         networkQueue: DispatchQueue = .global(qos: .background),
         responseQueue: DispatchQueue = .main,
@@ -130,7 +130,7 @@ final class OpenAIService {
     /// - Returns: Returns an OpenAICompletionResponse Data Model
     @available(swift 5.5)
     @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
-    func sendCompletion(
+    public func sendCompletion(
         with body: OpenAICompletionBody,
         networkQueue: DispatchQueue = .global(qos: .background),
         responseQueue: DispatchQueue = .main
@@ -152,7 +152,7 @@ final class OpenAIService {
     /// - Returns: Returns an OpenAIChatResponse Data Model
     @available(swift 5.5)
     @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
-    func sendChat(
+    public func sendChat(
         with body: OpenAIChatBody,
         networkQueue: DispatchQueue = .global(qos: .background),
         responseQueue: DispatchQueue = .main
@@ -176,7 +176,7 @@ final class OpenAIService {
     /// - Returns: Returns an OpenAIEditsResponse Data Model
     @available(swift 5.5)
     @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
-    func sendEdits(
+    public func sendEdits(
         with body: OpenAIEditsBody,
         networkQueue: DispatchQueue = .global(qos: .background),
         responseQueue: DispatchQueue = .main
@@ -200,7 +200,7 @@ final class OpenAIService {
     /// - Returns: Returns an OpenAIGenerationImageResponse Data Model
     @available(swift 5.5)
     @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
-    func sendImageGeneration(
+    public func sendImageGeneration(
         with body: OpenAIGenerationImageBody,
         networkQueue: DispatchQueue = .global(qos: .background),
         responseQueue: DispatchQueue = .main

@@ -7,14 +7,14 @@
 
 import Foundation
 
-struct OpenAIChatResponse: Codable {
+public struct OpenAIChatResponse: Codable {
     let id: String
     let object: String
     let created: Int
     let choices: [OpenAIChatChoice]
 }
 
-struct OpenAIChatChoice: Codable {
+public struct OpenAIChatChoice: Codable {
     let index: Int
     let message: OpenAIChatMessage
     let finishReason: String

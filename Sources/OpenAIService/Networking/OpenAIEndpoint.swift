@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum OpenAIEndpoint {
+public enum OpenAIEndpoint {
     case completions
     case edits
     case chatCompletions

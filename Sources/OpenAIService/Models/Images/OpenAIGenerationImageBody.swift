@@ -9,7 +9,7 @@
 import Foundation
 
 /// https://platform.openai.com/docs/api-reference/images/create
-struct OpenAIGenerationImageBody: Encodable {
+public struct OpenAIGenerationImageBody: Encodable {
     
     /// A text description of the desired image(s). The maximum length is 1000 characters.
     let prompt: String
@@ -25,7 +25,7 @@ struct OpenAIGenerationImageBody: Encodable {
     
     let user: String?
     
-    init(
+    public init(
         prompt: String,
         imageCount: Int? = 1,
         size: OpenAIGenerationImageSize? = .large,
@@ -48,13 +48,13 @@ struct OpenAIGenerationImageBody: Encodable {
     }
 }
 
-enum OpenAIGenerationImageSize: String, Encodable {
+public enum OpenAIGenerationImageSize: String, Encodable {
     case small = "256x256"
     case medium = "512x512"
     case large = "1024x1024"
 }
 
-enum OpenAIGenerationImageResponseFormat: String, Encodable {
+public enum OpenAIGenerationImageResponseFormat: String, Encodable {
     case url
     case base64json
     

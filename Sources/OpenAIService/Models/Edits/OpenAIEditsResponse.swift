@@ -7,13 +7,13 @@
 
 import Foundation
 
-struct OpenAIEditsResponse: Codable {
+public struct OpenAIEditsResponse: Codable {
     let object: String
     let created: Int
     let choices: [OpenAIEditsChoice]
 }
 
-struct OpenAIEditsChoice: Codable {
+public struct OpenAIEditsChoice: Codable {
     let text: String
     let index: Int
 }

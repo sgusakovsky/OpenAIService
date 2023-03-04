@@ -8,7 +8,7 @@
 import Foundation
 
 /// A set of models that can understand and generate natural language
-enum OpenAIChatModelType: String, Encodable {
+public enum OpenAIChatModelType: String, Encodable {
     
     /// Most capable GPT-3.5 model and optimized for chat at 1/10th the cost of text-davinci-003. Will be updated with our latest model iteration.
     ///

@@ -8,7 +8,7 @@
 import Foundation
 
 /// https://platform.openai.com/docs/api-reference/chat/create
-struct OpenAIChatBody: Encodable {
+public struct OpenAIChatBody: Encodable {
     
     /// The messages to generate chat completions for, in the chat format.
     let messages: [OpenAIChatMessage]
@@ -47,7 +47,7 @@ struct OpenAIChatBody: Encodable {
     /// A unique identifier representing your end-user, which can help OpenAI to monitor and detect abuse
     let user: String?
     
-    init(
+    public init(
         messages: [OpenAIChatMessage],
         model: OpenAIChatModelType = .chatGPTTurbo,
         temperature: Double? = 1,
@@ -85,7 +85,7 @@ struct OpenAIChatBody: Encodable {
     }
 }
 
-struct OpenAIChatMessage: Codable {
+public struct OpenAIChatMessage: Codable {
     var role: OpenAIChatMessageRole
     var content: String
     
@@ -95,7 +95,7 @@ struct OpenAIChatMessage: Codable {
     }
 }
 
-enum OpenAIChatMessageRole: String, Codable {
+public enum OpenAIChatMessageRole: String, Codable {
     case system
     case user
     case assistant

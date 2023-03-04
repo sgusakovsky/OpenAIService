@@ -8,7 +8,7 @@
 import Foundation
 
 /// A set of models that are feature specific.
-enum OpenAIEditsModelType: String, Encodable {
+public enum OpenAIEditsModelType: String, Encodable {
     
     /// > Model Name: text-davinci-edit-001
     case davinci = "text-davinci-edit-001"

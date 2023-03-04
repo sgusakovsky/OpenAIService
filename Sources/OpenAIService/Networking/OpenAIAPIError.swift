@@ -7,20 +7,20 @@
 
 import Foundation
 
-enum OpenAIAPIError: Error {
+public enum OpenAIAPIError: Error {
     case internalError(error: InternalError)
     case genericError(error: Error)
     case decodingError(error: Error)
     case noDataError
 }
 
-struct RequestError: LocalizedError {
+public struct RequestError: LocalizedError {
     var errorDescription: String {
         "Error creating the url"
     }
 }
 
-struct InternalError: LocalizedError, Decodable {
+public struct InternalError: LocalizedError, Decodable {
     let message: String
     let type: String
     let param: String?
@@ -31,6 +31,6 @@ struct InternalError: LocalizedError, Decodable {
     }
 }
 
-struct ResponseError: Decodable {
+public struct ResponseError: Decodable {
     let error: InternalError
 }

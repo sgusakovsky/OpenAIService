@@ -7,15 +7,15 @@
 
 import Foundation
 
-final class OpenAIApiClient {
+public final class OpenAIApiClient {
     
     private let urlSession: URLSession
     
-    init(urlSession: URLSession = .shared) {
+    public init(urlSession: URLSession = .shared) {
         self.urlSession = urlSession
     }
     
-    func makeRequest<ResponseModel: Codable>(
+    public func makeRequest<ResponseModel: Codable>(
         request: URLRequest,
         networkQueue: DispatchQueue,
         responseQueue: DispatchQueue,
@@ -48,7 +48,7 @@ final class OpenAIApiClient {
         
     }
     
-    func prepareRequest<BodyType: Encodable>(
+    public func prepareRequest<BodyType: Encodable>(
         _ endpoint: OpenAIEndpoint,
         body: BodyType,
         token: String
