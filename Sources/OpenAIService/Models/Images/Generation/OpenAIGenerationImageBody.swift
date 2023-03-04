@@ -56,10 +56,5 @@ public enum OpenAIGenerationImageSize: String, Encodable {
 
 public enum OpenAIGenerationImageResponseFormat: String, Encodable {
     case url
-    case base64json
-    
-    enum CodingKeys: String, CodingKey {
-        case url
-        case base64json = "b64_json"
-    }
+    case base64 = "b64_json"
 }

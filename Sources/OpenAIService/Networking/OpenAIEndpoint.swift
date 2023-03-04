@@ -7,13 +7,14 @@
 
 import Foundation
 
-public enum OpenAIEndpoint {
+enum OpenAIEndpoint {
     case completions
     case edits
     case chatCompletions
     case imagesGenerations
+    case imageEdits
     
-    public var path: String {
+    var path: String {
         switch self {
         case .completions:
             return "/v1/completions"
@@ -23,20 +24,28 @@ public enum OpenAIEndpoint {
             return "/v1/chat/completions"
         case .imagesGenerations:
             return "/v1/images/generations"
+        case .imageEdits:
+            return "/v1/images/generations"
         }
     }
     
-    public var method: String {
+    var method: HTTPMethod {
         switch self {
-        case .completions, .edits, .chatCompletions, .imagesGenerations:
-            return "POST"
+        case .completions, .edits, .chatCompletions, .imagesGenerations, .imageEdits:
+            return .post
         }
     }
     
-    public func baseURL() -> String {
+    func baseURL() -> String {
         switch self {
-        case .completions, .edits, .chatCompletions, .imagesGenerations:
+        case .completions, .edits, .chatCompletions, .imagesGenerations, .imageEdits:
             return "https://api.openai.com"
         }
     }
+}
+
+enum HTTPMethod: String {
+    case get = "GET"
+    case post = "POST"
+    case delete = "DELETE"
 }

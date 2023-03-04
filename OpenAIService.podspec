@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name         = 'OpenAIService'
-  spec.version      = '1.1.4'
+  spec.version      = '1.1.5'
   spec.homepage     = 'https://github.com/sgusakovsky/OpenAIService'
   spec.license      = {
     :type => 'MIT',
@@ -16,6 +16,5 @@ Pod::Spec.new do |spec|
   spec.source_files = 'Sources/**/*.swift'
   spec.requires_arc = true
   spec.swift_version = "5.0"
-  spec.osx.deployment_target = "10.15"
   spec.ios.deployment_target = "13.0"
 end

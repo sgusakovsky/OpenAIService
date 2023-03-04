@@ -29,7 +29,10 @@ Import the module in your application.
 
 Set your API token from creating one [here](https://platform.openai.com/account/api-keys).
 
-`let service = OpenAIService(authToken: "OPEN_AI_TOKEN")`
+```swift
+let config = OpenAIConfiguration(organizationId: "ORG", apiKey: "API_KEY")
+let service = OpenAIService(config: config)
+```
 
 Create a call to the completions API, passing in a text prompt.
 
@@ -86,12 +89,14 @@ The API will return an `OpenAIEditsResponse` object containing the corresponding
 Create a call to the image generation API, passing in a text prompt.
 
 ```swift
-let body = OpenAIGenerationImageBody(prompt: "Good weekend")
+let body = OpenAIGenerationImageBody(prompt: "Good weekend", size: .small, responseFormat: .base64)
 service?.sendImageGeneration(with: body, completionHandler: { result in
     switch result {
     case .success(let response):
-        if let imageUrlString = response.data.first?.url, let imageUrl = URL(string: imageUrlString) {
-            print(imageUrl)
+        if let image = response.data.first?.image {
+            print(image)
+        } else if let url = response.data.first?.url {
+            print(url)
         }
     case .failure(let error):
         print(error.localizedDescription)

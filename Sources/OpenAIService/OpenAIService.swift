@@ -11,14 +11,14 @@ import FoundationNetworking
 import FoundationXML
 #endif
 
-public class OpenAIService {
-    private let token: String
+public final class OpenAIService {
+    private let config: OpenAIConfiguration
     private let apiClient: OpenAIApiClient
     
     
-    public init(authToken: String, apiClient: OpenAIApiClient = OpenAIApiClient()) {
-        self.token = authToken
-        self.apiClient = apiClient
+    public init(config: OpenAIConfiguration, urlSession: URLSession = .shared) {
+        self.config = config
+        self.apiClient = OpenAIApiClient(urlSession: urlSession)
     }
     
     /// Send a Completion to the OpenAI API
@@ -32,7 +32,7 @@ public class OpenAIService {
         completionHandler: @escaping (Result<OpenAICompletionResponse, OpenAIAPIError>) -> Void
     ) {
         let endpoint = OpenAIEndpoint.completions
-        guard let request = apiClient.prepareRequest(endpoint, body: body, token: token) else {
+        guard let request = apiClient.prepareRequest(endpoint, body: body, config: config) else {
             completionHandler(.failure(.genericError(error: RequestError())))
             return
         }
@@ -56,7 +56,7 @@ public class OpenAIService {
         completionHandler: @escaping (Result<OpenAIChatResponse, OpenAIAPIError>) -> Void
     ) {
         let endpoint = OpenAIEndpoint.chatCompletions
-        guard let request = apiClient.prepareRequest(endpoint, body: body, token: token) else {
+        guard let request = apiClient.prepareRequest(endpoint, body: body, config: config) else {
             completionHandler(.failure(.genericError(error: RequestError())))
             return
         }
@@ -82,7 +82,7 @@ public class OpenAIService {
         completionHandler: @escaping (Result<OpenAIEditsResponse, OpenAIAPIError>) -> Void
     ) {
         let endpoint = OpenAIEndpoint.edits
-        guard let request = apiClient.prepareRequest(endpoint, body: body, token: token) else {
+        guard let request = apiClient.prepareRequest(endpoint, body: body, config: config) else {
             completionHandler(.failure(.genericError(error: RequestError())))
             return
         }
@@ -107,7 +107,7 @@ public class OpenAIService {
         completionHandler: @escaping (Result<OpenAIGenerationImageResponse, OpenAIAPIError>) -> Void
     ) {
         let endpoint = OpenAIEndpoint.imagesGenerations
-        guard let request = apiClient.prepareRequest(endpoint, body: body, token: token) else {
+        guard let request = apiClient.prepareRequest(endpoint, body: body, config: config) else {
             completionHandler(.failure(.genericError(error: RequestError())))
             return
         }

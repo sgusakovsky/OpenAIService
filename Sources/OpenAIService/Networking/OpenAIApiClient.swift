@@ -7,15 +7,15 @@
 
 import Foundation
 
-public class OpenAIApiClient {
+class OpenAIApiClient {
     
     private let urlSession: URLSession
     
-    public init(urlSession: URLSession = .shared) {
+    init(urlSession: URLSession = .shared) {
         self.urlSession = urlSession
     }
     
-    public func makeRequest<ResponseModel: Codable>(
+    func makeRequest<ResponseModel: Codable>(
         request: URLRequest,
         networkQueue: DispatchQueue,
         responseQueue: DispatchQueue,
@@ -48,10 +48,10 @@ public class OpenAIApiClient {
         
     }
     
-    public func prepareRequest<BodyType: Encodable>(
+    func prepareRequest<BodyType: Encodable>(
         _ endpoint: OpenAIEndpoint,
         body: BodyType,
-        token: String
+        config: OpenAIConfiguration
     ) -> URLRequest? {
         guard let baseUrl = URL(string: endpoint.baseURL()) else {
             return nil
@@ -68,8 +68,40 @@ public class OpenAIApiClient {
         }
         
         var request = URLRequest(url: url)
-        request.httpMethod = endpoint.method
-        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        request.httpMethod = endpoint.method.rawValue
+        request.setValue("Bearer \(config.apiKey)", forHTTPHeaderField: "Authorization")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        let encoder = JSONEncoder()
+        if let encoded = try? encoder.encode(body) {
+            request.httpBody = encoded
+        }
+        
+        return request
+    }
+    
+    func prepareMultipartFormDataRequest<BodyType: Encodable>(
+        _ endpoint: OpenAIEndpoint,
+        body: BodyType,
+        config: OpenAIConfiguration
+    ) -> URLRequest? {
+        guard let baseUrl = URL(string: endpoint.baseURL()) else {
+            return nil
+        }
+        
+        guard var urlComponents = URLComponents(url: baseUrl, resolvingAgainstBaseURL: true) else {
+            return nil
+        }
+        
+        urlComponents.path = endpoint.path
+        
+        guard let url = urlComponents.url else {
+            return nil
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = endpoint.method.rawValue
+        request.setValue("Bearer \(config.apiKey)", forHTTPHeaderField: "Authorization")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
         let encoder = JSONEncoder()

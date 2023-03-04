@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "OpenAIService",
     platforms: [
-        .macOS(.v10_14), .iOS(.v13), .tvOS(.v13), .watchOS(.v6)
+        .iOS(.v13), .watchOS(.v6)
     ],
     products: [
         .library(
