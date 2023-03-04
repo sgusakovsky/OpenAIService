@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name         = 'OpenAIService'
-  spec.version      = '1.0.0'
+  spec.version      = '1.0.1'
   spec.osx.deployment_target = '10.15'
   spec.ios.deployment_target = '13.0'
   spec.tvos.deployment_target = '13.0'
