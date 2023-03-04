@@ -86,8 +86,16 @@ public struct OpenAIChatBody: Encodable {
 }
 
 public struct OpenAIChatMessage: Codable {
-    public var role: OpenAIChatMessageRole
-    public var content: String
+    public let role: OpenAIChatMessageRole
+    public let content: String
+    
+    public init(
+        role: OpenAIChatMessageRole = .user,
+        content: String
+    ) {
+        self.role = role
+        self.content = content
+    }
     
     enum CodingKeys: String, CodingKey {
         case role
