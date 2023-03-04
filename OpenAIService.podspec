@@ -1,10 +1,7 @@
 Pod::Spec.new do |spec|
   spec.name         = 'OpenAIService'
-  spec.version      = '1.0.1'
-  spec.osx.deployment_target = '10.15'
-  spec.ios.deployment_target = '13.0'
-  spec.tvos.deployment_target = '13.0'
-  spec.watchos.deployment_target = '6.0'
+  spec.version      = '1.0.2'
+  spec.homepage     = 'https://github.com/sgusakovsky/OpenAIService'
   spec.license      = {
     :type => 'MIT',
     :file => 'LICENSE',
