@@ -1,10 +1,5 @@
-[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fgusakovsky%2FOpenAIService%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/gusakovsky/OpenAIService)
-[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fgusakovsky%2FOpenAIService%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/gusakovsky/OpenAIService)
 
-![](https://img.shields.io/github/license/gusakovsky/OpenAIService)
-![GitHub Workflow Status (with branch)](https://img.shields.io/github/actions/workflow/status/gusakovsky/OpenAIService/swift.yml?branch=main)
-[![](https://img.shields.io/badge/SPM-supported-DE5C43.svg?style=flat)](https://swift.org/package-manager/)
-
+![](https://img.shields.io/github/license/sgusakovsky/OpenAIService) [![](https://img.shields.io/badge/SPM-supported-DE5C43.svg?style=flat)](https://swift.org/package-manager/) ![CocoaPods](https://img.shields.io/cocoapods/v/OpenAIService.svg)
 # OpenAI API Client Library in Swift
 
 This is a community-maintained library to access OpenAI HTTP API's. The full API docs can be found here:
@@ -18,11 +13,13 @@ Copy source files into your own project
 ### Swift Package Manager
 
 You can use Swift Package Manager to integrate the library by adding the following dependency in your Package.swift file or by adding directly within Xcode
+
 `.Package(url: "https://github.com/gusakovsky/OpenAIService.git", majorVersion: 1)`
 
 ### CocoaPods
 
 You can use CocoaPods to integrate the library by adding the following dependency.
+
 `pod 'OpenAIService''`
 
 ## Example Usage
@@ -147,13 +144,10 @@ do {
 
 I will be glad of your donations for the further development of the library.
 
-USDT(ERC20): 0x4D54e040d75b7af7db0fD66566D06AfB68286f9f
-
-USDC(ERC20): 0x4D54e040d75b7af7db0fD66566D06AfB68286f9f
-
-USDT(TRC20): TCAAt12xB4jgwDPvDWKAHaLodoUH7yw2Kg
-
-USDC(TRC20): TCAAt12xB4jgwDPvDWKAHaLodoUH7yw2Kg
+- USDT(ERC20): 0x4D54e040d75b7af7db0fD66566D06AfB68286f9f
+- USDC(ERC20): 0x4D54e040d75b7af7db0fD66566D06AfB68286f9f
+- USDT(TRC20): TCAAt12xB4jgwDPvDWKAHaLodoUH7yw2Kg
+- USDC(TRC20): TCAAt12xB4jgwDPvDWKAHaLodoUH7yw2Kg
 
 ## Licence 
 
