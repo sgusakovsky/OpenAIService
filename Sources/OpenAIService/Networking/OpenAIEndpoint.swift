@@ -25,7 +25,7 @@ enum OpenAIEndpoint {
         case .imagesGenerations:
             return "/v1/images/generations"
         case .imageEdits:
-            return "/v1/images/generations"
+            return "/v1/images/edits"
         }
     }
     

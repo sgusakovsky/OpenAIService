@@ -71,9 +71,7 @@ public final class OpenAIService {
     
     /// Send a Edit request to the OpenAI API
     /// - Parameters:
-    ///   - input: The input text to use as a starting point for the edit.
-    ///   - model: The AI Model to Use. Set to `OpenAIEditsModelType.feature(.davinci)` by default which is the most capable model
-    ///   - instruction: The instruction that tells the model how to edit the prompt.
+    ///   - body: Body of chat completion request
     ///   - completionHandler: Returns an OpenAIEditsResponse Data Model
     public func sendEdits(
         with body: OpenAIEditsBody,
@@ -96,9 +94,7 @@ public final class OpenAIService {
     
     /// Send a Image generation request to the OpenAI API
     /// - Parameters:
-    ///   - prompt: A text description of the desired image(s). The maximum length is 1000 characters.
-    ///   - imageSize: Size of expected image to Use. Set to `OpenAIGenerationImageSize.large` by default.
-    ///   - user: A unique identifier representing your end-user, which can help OpenAI to monitor and detect abuse.
+    ///   - body: Body of chat completion request
     ///   - completionHandler: Returns an OpenAIGenerationImageResponse Data Model
     public func sendImageGeneration(
         with body: OpenAIGenerationImageBody,
@@ -119,14 +115,33 @@ public final class OpenAIService {
         )
     }
     
+    /// Send a Image edits request to the OpenAI API
+    /// - Parameters:
+    ///   - body: Body of chat completion request
+    ///   - completionHandler: Returns an OpenAIGenerationImageResponse Data Model
+    public func sendImageEdits(
+        with body: OpenAIImageEditsBody,
+        networkQueue: DispatchQueue = .global(qos: .background),
+        responseQueue: DispatchQueue = .main,
+        completionHandler: @escaping (Result<OpenAIGenerationImageResponse, OpenAIAPIError>) -> Void
+    ) {
+        let endpoint = OpenAIEndpoint.imageEdits
+        guard let request = apiClient.prepareMultipartFormDataRequest(endpoint, body: body.body, config: config) else {
+            completionHandler(.failure(.genericError(error: RequestError())))
+            return
+        }
+        
+        apiClient.makeRequest(
+            request: request,
+            networkQueue: networkQueue,
+            responseQueue: responseQueue,
+            completionHandler: completionHandler
+        )
+    }
     
     /// Send a Completion to the OpenAI API
     /// - Parameters:
-    ///   - prompt: The Text Prompt
-    ///   - model: The AI Model to Use. Set to `OpenAICompletionModelType.gpt3(.davinci)` by default which is the most capable model
-    ///   - maxTokens: The limit character for the returned response, defaults to 16 as per the API
-    ///   - temperature: What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.
-    ///   - user: A unique identifier representing your end-user, which can help OpenAI to monitor and detect abuse.
+    ///   - body: Body of chat completion request
     /// - Returns: Returns an OpenAICompletionResponse Data Model
     @available(swift 5.5)
     @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
@@ -170,9 +185,7 @@ public final class OpenAIService {
     
     /// Send a Edit request to the OpenAI API
     /// - Parameters:
-    ///   - input: The input text to use as a starting point for the edit.
-    ///   - model: The AI Model to Use. Set to `OpenAIEditsModelType.feature(.davinci)` by default which is the most capable model
-    ///   - instruction: The instruction that tells the model how to edit the prompt.
+    ///   - body: Body of chat completion request
     /// - Returns: Returns an OpenAIEditsResponse Data Model
     @available(swift 5.5)
     @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
@@ -194,9 +207,7 @@ public final class OpenAIService {
     
     /// Send a Image generation request to the OpenAI API
     /// - Parameters:
-    ///   - prompt: A text description of the desired image(s). The maximum length is 1000 characters.
-    ///   - imageSize: Size of expected image to Use. Set to `OpenAIGenerationImageSize.large` by default.
-    ///   - user: A unique identifier representing your end-user, which can help OpenAI to monitor and detect abuse.
+    ///   - body: Body of chat completion request
     /// - Returns: Returns an OpenAIGenerationImageResponse Data Model
     @available(swift 5.5)
     @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
@@ -207,6 +218,28 @@ public final class OpenAIService {
     ) async throws -> OpenAIGenerationImageResponse {
         return try await withCheckedThrowingContinuation { continuation in
             sendImageGeneration(
+                with: body,
+                networkQueue: networkQueue,
+                responseQueue: responseQueue
+            ) { result in
+                continuation.resume(with: result)
+            }
+        }
+    }
+    
+    /// Send a Image edits request to the OpenAI API
+    /// - Parameters:
+    ///   - body: Body of chat completion request
+    /// - Returns: Returns an OpenAIGenerationImageResponse Data Model
+    @available(swift 5.5)
+    @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
+    public func sendImageEdits(
+        with body: OpenAIImageEditsBody,
+        networkQueue: DispatchQueue = .global(qos: .background),
+        responseQueue: DispatchQueue = .main
+    ) async throws -> OpenAIGenerationImageResponse {
+        return try await withCheckedThrowingContinuation { continuation in
+            sendImageEdits(
                 with: body,
                 networkQueue: networkQueue,
                 responseQueue: responseQueue

@@ -20,7 +20,7 @@ You can use Swift Package Manager to integrate the library by adding the followi
 
 You can use CocoaPods to integrate the library by adding the following dependency.
 
-`pod 'OpenAIService''`
+`pod 'OpenAIService'`
 
 ## Example Usage
 

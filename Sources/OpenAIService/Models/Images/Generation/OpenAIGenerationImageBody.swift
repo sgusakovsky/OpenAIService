@@ -15,21 +15,21 @@ public struct OpenAIGenerationImageBody: Encodable {
     public let prompt: String
     
     /// The number of images to generate. Must be between 1 and 10.
-    public let imageCount: Int?
+    public let imageCount: Int
     
     /// The size of the generated images. Must be one of 256x256, 512x512, or 1024x1024
-    public let size: OpenAIGenerationImageSize?
+    public let size: OpenAIGenerationImageSize
     
     /// The format in which the generated images are returned. Must be one of url or b64_json.
-    public let responseFormat: OpenAIGenerationImageResponseFormat?
+    public let responseFormat: OpenAIGenerationImageResponseFormat
     
     public let user: String?
     
     public init(
         prompt: String,
-        imageCount: Int? = 1,
-        size: OpenAIGenerationImageSize? = .large,
-        responseFormat: OpenAIGenerationImageResponseFormat? = .url,
+        imageCount: Int = 1,
+        size: OpenAIGenerationImageSize = .large,
+        responseFormat: OpenAIGenerationImageResponseFormat = .url,
         user: String? = nil
     ) {
         self.prompt = prompt

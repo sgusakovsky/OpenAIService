@@ -80,35 +80,27 @@ class OpenAIApiClient {
         return request
     }
     
-    func prepareMultipartFormDataRequest<BodyType: Encodable>(
+    func prepareMultipartFormDataRequest(
         _ endpoint: OpenAIEndpoint,
-        body: BodyType,
+        body: [String: Any],
         config: OpenAIConfiguration
     ) -> URLRequest? {
-        guard let baseUrl = URL(string: endpoint.baseURL()) else {
+        
+        let multipartRequest = MultipartFormDataRequest(endpoint: endpoint)
+        
+        for (key, value) in body {
+            if let dataValue = value as? FormData {
+                multipartRequest.addDataField(named: key, formData: dataValue)
+            } else {
+                multipartRequest.addTextField(named: key, value: "\(value)")
+            }
+        }
+        
+        guard var request = multipartRequest.asURLRequest() else {
             return nil
         }
         
-        guard var urlComponents = URLComponents(url: baseUrl, resolvingAgainstBaseURL: true) else {
-            return nil
-        }
-        
-        urlComponents.path = endpoint.path
-        
-        guard let url = urlComponents.url else {
-            return nil
-        }
-        
-        var request = URLRequest(url: url)
-        request.httpMethod = endpoint.method.rawValue
         request.setValue("Bearer \(config.apiKey)", forHTTPHeaderField: "Authorization")
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        
-        let encoder = JSONEncoder()
-        if let encoded = try? encoder.encode(body) {
-            request.httpBody = encoded
-        }
-        
         return request
     }
     
