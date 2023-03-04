@@ -8,12 +8,12 @@
 import Foundation
 
 public struct OpenAIEditsResponse: Codable {
-    let object: String
-    let created: Int
-    let choices: [OpenAIEditsChoice]
+    public let object: String
+    public let created: Int
+    public let choices: [OpenAIEditsChoice]
 }
 
 public struct OpenAIEditsChoice: Codable {
-    let text: String
-    let index: Int
+    public let text: String
+    public let index: Int
 }

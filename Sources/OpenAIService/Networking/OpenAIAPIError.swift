@@ -15,22 +15,22 @@ public enum OpenAIAPIError: Error {
 }
 
 public struct RequestError: LocalizedError {
-    var errorDescription: String {
+    public var errorDescription: String {
         "Error creating the url"
     }
 }
 
 public struct InternalError: LocalizedError, Decodable {
-    let message: String
-    let type: String
-    let param: String?
-    let code: String?
+    public let message: String
+    public let type: String
+    public let param: String?
+    public let code: String?
     
-    var errorDescription: String {
+    public var errorDescription: String {
         message
     }
 }
 
 public struct ResponseError: Decodable {
-    let error: InternalError
+    public let error: InternalError
 }

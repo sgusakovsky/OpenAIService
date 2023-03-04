@@ -13,7 +13,7 @@ public enum OpenAIEndpoint {
     case chatCompletions
     case imagesGenerations
     
-    var path: String {
+    public var path: String {
         switch self {
         case .completions:
             return "/v1/completions"
@@ -26,14 +26,14 @@ public enum OpenAIEndpoint {
         }
     }
     
-    var method: String {
+    public var method: String {
         switch self {
         case .completions, .edits, .chatCompletions, .imagesGenerations:
             return "POST"
         }
     }
     
-    func baseURL() -> String {
+    public func baseURL() -> String {
         switch self {
         case .completions, .edits, .chatCompletions, .imagesGenerations:
             return "https://api.openai.com"

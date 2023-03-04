@@ -11,7 +11,7 @@ import FoundationNetworking
 import FoundationXML
 #endif
 
-public final class OpenAIService {
+public class OpenAIService {
     private let token: String
     private let apiClient: OpenAIApiClient
     

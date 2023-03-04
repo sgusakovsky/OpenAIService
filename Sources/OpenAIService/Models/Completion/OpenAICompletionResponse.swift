@@ -8,17 +8,17 @@
 import Foundation
 
 public struct OpenAICompletionResponse: Codable {
-    let id: String
-    let object: String
-    let model: String
-    let created: Int
-    let choices: [OpenAICompletionChoice]
+    public let id: String
+    public let object: String
+    public let model: String
+    public let created: Int
+    public let choices: [OpenAICompletionChoice]
 }
 
 public struct OpenAICompletionChoice: Codable {
-    let text: String
-    let index: Int
-    let finishReason: String
+    public let text: String
+    public let index: Int
+    public let finishReason: String
     
     
     enum CodingKeys: String, CodingKey {

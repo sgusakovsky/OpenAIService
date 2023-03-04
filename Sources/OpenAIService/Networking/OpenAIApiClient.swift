@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class OpenAIApiClient {
+public class OpenAIApiClient {
     
     private let urlSession: URLSession
     

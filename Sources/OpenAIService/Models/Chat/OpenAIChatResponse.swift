@@ -8,16 +8,16 @@
 import Foundation
 
 public struct OpenAIChatResponse: Codable {
-    let id: String
-    let object: String
-    let created: Int
-    let choices: [OpenAIChatChoice]
+    public let id: String
+    public let object: String
+    public let created: Int
+    public let choices: [OpenAIChatChoice]
 }
 
 public struct OpenAIChatChoice: Codable {
-    let index: Int
-    let message: OpenAIChatMessage
-    let finishReason: String
+    public let index: Int
+    public let message: OpenAIChatMessage
+    public let finishReason: String
     
     enum CodingKeys: String, CodingKey {
         case index
