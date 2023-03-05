@@ -103,9 +103,51 @@ service?.sendImageGeneration(with: body, completionHandler: { result in
     }
 })
 ```
-The API will return an `OpenAIGenerationImageResponse` object containing the corresponding image url items.
+The API will return an `OpenAIImageResponse` object containing the corresponding image url items.
 
-For a full list of the supported models see [OpenAICompletionModelType.swift](https://github.com/gusakovsky/OpenAIService/blob/main/Sources/OpenAIService/Models/Completion/OpenAICompletionModelType.swift), [OpenAIChatModelType.swift](https://github.com/gusakovsky/OpenAIService/blob/main/Sources/OpenAIService/Models/Chat/OpenAIChatModelType.swift), [OpenAIEditsModelType.swift](https://github.com/gusakovsky/OpenAIService/blob/main/Sources/OpenAIService/Models/Edits/OpenAIEditsModelType.swift). For more information on the models see the [OpenAI API Documentation](https://platform.openai.com/docs/models).
+Create a call to the image edit API, passing in a text prompt.
+
+```swift
+guard let body = OpenAIImageEditsBody(image: UIImage(named: "image")!, mask: UIImage(named: "mask")!, prompt: "A cute baby sea otter wearing a beret", size: .small, responseFormat: .base64) else {
+    return
+}
+service?.sendImageEdits(with: body, completionHandler: { result in
+    switch result {
+    case .success(let response):
+        if let image = response.data.first?.image {
+            print(image)
+        } else if let url = response.data.first?.url {
+            print(url)
+        }
+    case .failure(let error):
+        print(error.localizedDescription)
+    }
+})
+```
+The API will return an `OpenAIImageResponse` object containing the corresponding image url items.
+
+Create a call to the image edit API, passing in a text prompt.
+
+```swift
+guard let body = OpenAIImageVariationBody(image: UIImage(named: "image")!, size: .small, responseFormat: .base64) else {
+    return
+}
+service?.sendImageVariation(with: body, completionHandler: { result in
+    switch result {
+    case .success(let response):
+        if let image = response.data.first?.image {
+            print(image)
+        } else if let url = response.data.first?.url {
+            print(url)
+        }
+    case .failure(let error):
+        print(error.localizedDescription)
+    }
+})
+```
+The API will return an `OpenAIImageResponse` object containing the corresponding image url items.
+
+For a full list of the supported models see [OpenAICompletionModelType.swift](https://github.com/sgusakovsky/OpenAIService/blob/main/Sources/OpenAIService/Models/Completion/OpenAICompletionModelType.swift), [OpenAIChatModelType.swift](https://github.com/sgusakovsky/OpenAIService/blob/main/Sources/OpenAIService/Models/Chat/OpenAIChatModelType.swift), [OpenAIEditsModelType.swift](https://github.com/sgusakovsky/OpenAIService/blob/main/Sources/OpenAIService/Models/Edits/OpenAIEditsModelType.swift). For more information on the models see the [OpenAI API Documentation](https://platform.openai.com/docs/models).
 
 OpenAIService also supports Swift concurrency so you can use Swift’s async/await syntax to fetch completions.
 

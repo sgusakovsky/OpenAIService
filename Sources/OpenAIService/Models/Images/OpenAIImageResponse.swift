@@ -11,11 +11,11 @@ import Foundation
 import UIKit
 #endif
 
-public struct OpenAIGenerationImageResponse: Codable {
-    public let data: [OpenAIGenerationImageData]
+public struct OpenAIImageResponse: Codable {
+    public let data: [OpenAIImageData]
 }
 
-public enum OpenAIGenerationImageData: Codable {
+public enum OpenAIImageData: Codable {
     case url(String)
     case base64(String)
     

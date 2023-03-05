@@ -71,7 +71,7 @@ public final class OpenAIService {
     
     /// Send a Edit request to the OpenAI API
     /// - Parameters:
-    ///   - body: Body of chat completion request
+    ///   - body: Body of test edits request
     ///   - completionHandler: Returns an OpenAIEditsResponse Data Model
     public func sendEdits(
         with body: OpenAIEditsBody,
@@ -94,13 +94,13 @@ public final class OpenAIService {
     
     /// Send a Image generation request to the OpenAI API
     /// - Parameters:
-    ///   - body: Body of chat completion request
-    ///   - completionHandler: Returns an OpenAIGenerationImageResponse Data Model
+    ///   - body: Body of image generation request
+    ///   - completionHandler: Returns an OpenAIImageResponse Data Model
     public func sendImageGeneration(
         with body: OpenAIGenerationImageBody,
         networkQueue: DispatchQueue = .global(qos: .background),
         responseQueue: DispatchQueue = .main,
-        completionHandler: @escaping (Result<OpenAIGenerationImageResponse, OpenAIAPIError>) -> Void
+        completionHandler: @escaping (Result<OpenAIImageResponse, OpenAIAPIError>) -> Void
     ) {
         let endpoint = OpenAIEndpoint.imagesGenerations
         guard let request = apiClient.prepareRequest(endpoint, body: body, config: config) else {
@@ -117,15 +117,39 @@ public final class OpenAIService {
     
     /// Send a Image edits request to the OpenAI API
     /// - Parameters:
-    ///   - body: Body of chat completion request
-    ///   - completionHandler: Returns an OpenAIGenerationImageResponse Data Model
+    ///   - body: Body of image edits request
+    ///   - completionHandler: Returns an OpenAIImageResponse Data Model
     public func sendImageEdits(
         with body: OpenAIImageEditsBody,
         networkQueue: DispatchQueue = .global(qos: .background),
         responseQueue: DispatchQueue = .main,
-        completionHandler: @escaping (Result<OpenAIGenerationImageResponse, OpenAIAPIError>) -> Void
+        completionHandler: @escaping (Result<OpenAIImageResponse, OpenAIAPIError>) -> Void
     ) {
         let endpoint = OpenAIEndpoint.imageEdits
+        guard let request = apiClient.prepareMultipartFormDataRequest(endpoint, body: body.body, config: config) else {
+            completionHandler(.failure(.genericError(error: RequestError())))
+            return
+        }
+        
+        apiClient.makeRequest(
+            request: request,
+            networkQueue: networkQueue,
+            responseQueue: responseQueue,
+            completionHandler: completionHandler
+        )
+    }
+    
+    /// Send a Image variation request to the OpenAI API
+    /// - Parameters:
+    ///   - body: Body of image variation request
+    ///   - completionHandler: Returns an OpenAIImageResponse Data Model
+    public func sendImageVariation(
+        with body: OpenAIImageVariationBody,
+        networkQueue: DispatchQueue = .global(qos: .background),
+        responseQueue: DispatchQueue = .main,
+        completionHandler: @escaping (Result<OpenAIImageResponse, OpenAIAPIError>) -> Void
+    ) {
+        let endpoint = OpenAIEndpoint.imageVariation
         guard let request = apiClient.prepareMultipartFormDataRequest(endpoint, body: body.body, config: config) else {
             completionHandler(.failure(.genericError(error: RequestError())))
             return
@@ -185,7 +209,7 @@ public final class OpenAIService {
     
     /// Send a Edit request to the OpenAI API
     /// - Parameters:
-    ///   - body: Body of chat completion request
+    ///   - body: Body of test edits request
     /// - Returns: Returns an OpenAIEditsResponse Data Model
     @available(swift 5.5)
     @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
@@ -207,7 +231,7 @@ public final class OpenAIService {
     
     /// Send a Image generation request to the OpenAI API
     /// - Parameters:
-    ///   - body: Body of chat completion request
+    ///   - body: Body of image generation request
     /// - Returns: Returns an OpenAIGenerationImageResponse Data Model
     @available(swift 5.5)
     @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
@@ -215,7 +239,7 @@ public final class OpenAIService {
         with body: OpenAIGenerationImageBody,
         networkQueue: DispatchQueue = .global(qos: .background),
         responseQueue: DispatchQueue = .main
-    ) async throws -> OpenAIGenerationImageResponse {
+    ) async throws -> OpenAIImageResponse {
         return try await withCheckedThrowingContinuation { continuation in
             sendImageGeneration(
                 with: body,
@@ -229,7 +253,7 @@ public final class OpenAIService {
     
     /// Send a Image edits request to the OpenAI API
     /// - Parameters:
-    ///   - body: Body of chat completion request
+    ///   - body: Body of image edits request
     /// - Returns: Returns an OpenAIGenerationImageResponse Data Model
     @available(swift 5.5)
     @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
@@ -237,9 +261,31 @@ public final class OpenAIService {
         with body: OpenAIImageEditsBody,
         networkQueue: DispatchQueue = .global(qos: .background),
         responseQueue: DispatchQueue = .main
-    ) async throws -> OpenAIGenerationImageResponse {
+    ) async throws -> OpenAIImageResponse {
         return try await withCheckedThrowingContinuation { continuation in
             sendImageEdits(
+                with: body,
+                networkQueue: networkQueue,
+                responseQueue: responseQueue
+            ) { result in
+                continuation.resume(with: result)
+            }
+        }
+    }
+    
+    /// Send a Image vatiation request to the OpenAI API
+    /// - Parameters:
+    ///   - body: Body of image variation request
+    /// - Returns: Returns an OpenAIGenerationImageResponse Data Model
+    @available(swift 5.5)
+    @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
+    public func sendImageVariation(
+        with body: OpenAIImageVariationBody,
+        networkQueue: DispatchQueue = .global(qos: .background),
+        responseQueue: DispatchQueue = .main
+    ) async throws -> OpenAIImageResponse {
+        return try await withCheckedThrowingContinuation { continuation in
+            sendImageVariation(
                 with: body,
                 networkQueue: networkQueue,
                 responseQueue: responseQueue
