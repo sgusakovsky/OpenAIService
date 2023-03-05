@@ -163,6 +163,33 @@ public final class OpenAIService {
         )
     }
     
+    /// Send a audio transcription request to the OpenAI API
+    /// - Parameters:
+    ///   - body: Body of audio transcription  request
+    ///   - completionHandler: Returns an OpenAIAudioResponse Data Model
+    public func sendAudioTranscription(
+        with body: OpenAIAudioTranscriptionBody,
+        networkQueue: DispatchQueue = .global(qos: .background),
+        responseQueue: DispatchQueue = .main,
+        completionHandler: @escaping (Result<OpenAIAudioResponse, OpenAIAPIError>) -> Void
+    ) {
+        let endpoint = OpenAIEndpoint.audioTranscriptions
+        guard let request = apiClient.prepareMultipartFormDataRequest(endpoint, body: body.body, config: config) else {
+            completionHandler(.failure(.genericError(error: RequestError())))
+            return
+        }
+        
+        apiClient.makeRequest(
+            request: request,
+            networkQueue: networkQueue,
+            responseQueue: responseQueue,
+            completionHandler: completionHandler
+        )
+    }
+    
+}
+
+extension OpenAIService {
     /// Send a Completion to the OpenAI API
     /// - Parameters:
     ///   - body: Body of chat completion request
@@ -232,7 +259,7 @@ public final class OpenAIService {
     /// Send a Image generation request to the OpenAI API
     /// - Parameters:
     ///   - body: Body of image generation request
-    /// - Returns: Returns an OpenAIGenerationImageResponse Data Model
+    /// - Returns: Returns an OpenAIImageResponse Data Model
     @available(swift 5.5)
     @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
     public func sendImageGeneration(
@@ -254,7 +281,7 @@ public final class OpenAIService {
     /// Send a Image edits request to the OpenAI API
     /// - Parameters:
     ///   - body: Body of image edits request
-    /// - Returns: Returns an OpenAIGenerationImageResponse Data Model
+    /// - Returns: Returns an OpenAIImageResponse Data Model
     @available(swift 5.5)
     @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
     public func sendImageEdits(
@@ -276,7 +303,7 @@ public final class OpenAIService {
     /// Send a Image vatiation request to the OpenAI API
     /// - Parameters:
     ///   - body: Body of image variation request
-    /// - Returns: Returns an OpenAIGenerationImageResponse Data Model
+    /// - Returns: Returns an OpenAIImageResponse Data Model
     @available(swift 5.5)
     @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
     public func sendImageVariation(
@@ -286,6 +313,28 @@ public final class OpenAIService {
     ) async throws -> OpenAIImageResponse {
         return try await withCheckedThrowingContinuation { continuation in
             sendImageVariation(
+                with: body,
+                networkQueue: networkQueue,
+                responseQueue: responseQueue
+            ) { result in
+                continuation.resume(with: result)
+            }
+        }
+    }
+    
+    /// Send a Image vatiation request to the OpenAI API
+    /// - Parameters:
+    ///   - body: Body of audio transcription  request
+    /// - Returns: Returns an OpenAIAudioResponse Data Model
+    @available(swift 5.5)
+    @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
+    public func sendAudioTranscription(
+        with body: OpenAIAudioTranscriptionBody,
+        networkQueue: DispatchQueue = .global(qos: .background),
+        responseQueue: DispatchQueue = .main
+    ) async throws -> OpenAIAudioResponse {
+        return try await withCheckedThrowingContinuation { continuation in
+            sendAudioTranscription(
                 with: body,
                 networkQueue: networkQueue,
                 responseQueue: responseQueue

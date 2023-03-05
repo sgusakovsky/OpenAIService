@@ -14,6 +14,7 @@ enum OpenAIEndpoint {
     case imagesGenerations
     case imageEdits
     case imageVariation
+    case audioTranscriptions
     
     var path: String {
         switch self {
@@ -29,19 +30,21 @@ enum OpenAIEndpoint {
             return "/v1/images/edits"
         case .imageVariation:
             return "/v1/images/variations"
+        case .audioTranscriptions:
+            return "/v1/audio/transcriptions"
         }
     }
     
     var method: HTTPMethod {
         switch self {
-        case .completions, .edits, .chatCompletions, .imagesGenerations, .imageEdits, .imageVariation:
+        case .completions, .edits, .chatCompletions, .imagesGenerations, .imageEdits, .imageVariation, .audioTranscriptions:
             return .post
         }
     }
     
     func baseURL() -> String {
         switch self {
-        case .completions, .edits, .chatCompletions, .imagesGenerations, .imageEdits, .imageVariation:
+        case .completions, .edits, .chatCompletions, .imagesGenerations, .imageEdits, .imageVariation, .audioTranscriptions:
             return "https://api.openai.com"
         }
     }
