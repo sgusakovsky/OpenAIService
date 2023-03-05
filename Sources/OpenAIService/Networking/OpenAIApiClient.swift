@@ -72,6 +72,10 @@ class OpenAIApiClient {
         request.setValue("Bearer \(config.apiKey)", forHTTPHeaderField: "Authorization")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
+        if let organizationId = config.organizationId {
+            request.setValue(organizationId, forHTTPHeaderField: "OpenAI-Organization")
+        }
+        
         let encoder = JSONEncoder()
         if let encoded = try? encoder.encode(body) {
             request.httpBody = encoded
@@ -101,6 +105,9 @@ class OpenAIApiClient {
         }
         
         request.setValue("Bearer \(config.apiKey)", forHTTPHeaderField: "Authorization")
+        if let organizationId = config.organizationId {
+            request.setValue(organizationId, forHTTPHeaderField: "OpenAI-Organization")
+        }
         return request
     }
     

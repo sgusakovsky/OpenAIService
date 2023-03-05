@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name         = 'OpenAIService'
-  spec.version      = '1.1.9'
+  spec.version      = '1.2.0'
   spec.homepage     = 'https://github.com/sgusakovsky/OpenAIService'
   spec.license      = {
     :type => 'MIT',

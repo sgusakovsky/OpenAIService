@@ -9,12 +9,12 @@ import Foundation
 
 public struct OpenAIConfiguration {
     /// The organization ID of the user.
-    public let organizationId: String
+    public let organizationId: String?
 
     /// The API key associated with the user.
     let apiKey: String
 
-    public init(organizationId: String, apiKey: String) {
+    public init(organizationId: String? = nil, apiKey: String) {
         self.organizationId = organizationId
         self.apiKey = apiKey
     }
