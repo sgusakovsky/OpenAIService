@@ -187,6 +187,30 @@ public final class OpenAIService {
         )
     }
     
+    /// Send a audio translation into English request to the OpenAI API
+    /// - Parameters:
+    ///   - body: Body of audio translation  request
+    ///   - completionHandler: Returns an OpenAIAudioResponse Data Model
+    public func sendAudioTranslation(
+        with body: OpenAIAudioTranslationBody,
+        networkQueue: DispatchQueue = .global(qos: .background),
+        responseQueue: DispatchQueue = .main,
+        completionHandler: @escaping (Result<OpenAIAudioResponse, OpenAIAPIError>) -> Void
+    ) {
+        let endpoint = OpenAIEndpoint.audioTranslations
+        guard let request = apiClient.prepareMultipartFormDataRequest(endpoint, body: body.body, config: config) else {
+            completionHandler(.failure(.genericError(error: RequestError())))
+            return
+        }
+        
+        apiClient.makeRequest(
+            request: request,
+            networkQueue: networkQueue,
+            responseQueue: responseQueue,
+            completionHandler: completionHandler
+        )
+    }
+    
 }
 
 extension OpenAIService {
@@ -322,7 +346,7 @@ extension OpenAIService {
         }
     }
     
-    /// Send a Image vatiation request to the OpenAI API
+    /// Send a audio transcription request to the OpenAI API
     /// - Parameters:
     ///   - body: Body of audio transcription  request
     /// - Returns: Returns an OpenAIAudioResponse Data Model
@@ -335,6 +359,28 @@ extension OpenAIService {
     ) async throws -> OpenAIAudioResponse {
         return try await withCheckedThrowingContinuation { continuation in
             sendAudioTranscription(
+                with: body,
+                networkQueue: networkQueue,
+                responseQueue: responseQueue
+            ) { result in
+                continuation.resume(with: result)
+            }
+        }
+    }
+    
+    /// Send a audio translation into English request to the OpenAI API
+    /// - Parameters:
+    ///   - body: Body of audio translation into English  request
+    /// - Returns: Returns an OpenAIAudioResponse Data Model
+    @available(swift 5.5)
+    @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
+    public func sendAudioTranslation(
+        with body: OpenAIAudioTranslationBody,
+        networkQueue: DispatchQueue = .global(qos: .background),
+        responseQueue: DispatchQueue = .main
+    ) async throws -> OpenAIAudioResponse {
+        return try await withCheckedThrowingContinuation { continuation in
+            sendAudioTranslation(
                 with: body,
                 networkQueue: networkQueue,
                 responseQueue: responseQueue

@@ -164,6 +164,23 @@ service?.sendAudioTranscription(with: body, completionHandler: { result in
 ```
 The API will return an `OpenAIAudioResponse` object containing the corresponding image url items.
 
+Create a call to the audio translation into English API.
+
+```swift
+let urlPath = Bundle.main.url(forResource: "audio", withExtension: "mp3")!
+let data = try? Data(contentsOf: urlPath)!
+let body = OpenAIAudioTranslationBody(file: data, fileFormat: .mp3)
+service?.sendAudioTranslation(with: body, completionHandler: { result in
+    switch result {
+    case .success(let response):
+        print(response.text)
+    case .failure(let error):
+        print(error.localizedDescription)
+    }
+})
+```
+The API will return an `OpenAIAudioResponse` object containing the corresponding image url items.
+
 For a full list of the supported models see [OpenAICompletionModelType.swift](https://github.com/sgusakovsky/OpenAIService/blob/main/Sources/OpenAIService/Models/Completion/OpenAICompletionModelType.swift), [OpenAIChatModelType.swift](https://github.com/sgusakovsky/OpenAIService/blob/main/Sources/OpenAIService/Models/Chat/OpenAIChatModelType.swift), [OpenAIEditsModelType.swift](https://github.com/sgusakovsky/OpenAIService/blob/main/Sources/OpenAIService/Models/Edits/OpenAIEditsModelType.swift). For more information on the models see the [OpenAI API Documentation](https://platform.openai.com/docs/models).
 
 OpenAIService also supports Swift concurrency so you can use Swift’s async/await syntax to fetch completions.
