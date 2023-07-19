@@ -221,15 +221,6 @@ do {
 }
 ```
 
-## Donate ❤️
-
-I will be glad of your donations for the further development of the library.
-
-- USDT(ERC20): 0x4D54e040d75b7af7db0fD66566D06AfB68286f9f
-- USDC(ERC20): 0x4D54e040d75b7af7db0fD66566D06AfB68286f9f
-- USDT(TRC20): TCAAt12xB4jgwDPvDWKAHaLodoUH7yw2Kg
-- USDC(TRC20): TCAAt12xB4jgwDPvDWKAHaLodoUH7yw2Kg
-
 ## Licence 
 
 The MIT License (MIT)
